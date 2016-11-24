@@ -5,8 +5,10 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Thu Nov 24 04:34:05 2016 Nathan Tréhout
-** Last update Thu Nov 24 06:33:41 2016 Nathan Tréhout
+** Last update Thu Nov 24 06:52:17 2016 Nathan Tréhout
 */
+
+#include <unistd.h>
 
 int	isArgs(char c)
 {
