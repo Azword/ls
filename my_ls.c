@@ -5,7 +5,7 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Thu Nov 24 06:53:40 2016 Nathan Tréhout
+** Last update Thu Nov 24 06:54:44 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
@@ -35,9 +35,9 @@ void	print_basic()
       if (entry->d_name[0] != '.')
 	{
 	  if (entry->d_type == 4)
-	    my_printf("%s%s\n", KBLU, entry->d_name);
+	    my_printf("%s\n", entry->d_name);
 	  else
-	    my_printf("%s%s\n", KNRM, entry->d_name);
+	    my_printf("%s\n", entry->d_name);
 	}
     }
 }
