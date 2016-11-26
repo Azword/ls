@@ -5,10 +5,15 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Thu Nov 24 04:34:05 2016 Nathan Tréhout
-** Last update Thu Nov 24 06:52:17 2016 Nathan Tréhout
+** Last update Thu Nov 24 06:55:48 2016 Nathan Tréhout
 */
 
 #include <unistd.h>
+#include <dirent.h>
+#include <include/my.h>
+
+#define KBLU  "\x1B[34m"
+#define KNRM  "\x1B[0m"
 
 int	isArgs(char c)
 {
@@ -80,4 +85,26 @@ char	*getArgs(int ac, char **av, char *args)
 	}
     }
   return (args);
+}
+
+void	print_basic(char *v)
+{
+  DIR	*dir;
+  struct dirent *entry;
+
+  if ((dir = opendir(v)) == NULL)
+    {
+      my_printf("[ERROR]");
+      return (84);
+    }
+  while ((entry = readdir(dir)) != NULL)
+    {
+      if (entry->d_name[0] != '.')
+	{
+	  if (entry->d_type == 4)
+	    my_printf("%s%s\n", KBLU, entry->d_name);
+	  else
+	    my_printf("%s%s\n", KNRM, entry->d_name);
+	}
+    }
 }

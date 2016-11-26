@@ -5,7 +5,7 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Thu Nov 24 06:54:44 2016 Nathan Tréhout
+** Last update Thu Nov 24 06:55:12 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
@@ -18,28 +18,6 @@
 char	**file_to_tab(char *toIntroduce, char **files)
 {
 
-}
-
-void	print_basic()
-{
-  DIR	*dir;
-  struct dirent *entry;
-
-  if ((dir = opendir(".")) == NULL)
-    {
-      my_printf("[ERROR]");
-      return (84);
-    }
-  while ((entry = readdir(dir)) != NULL)
-    {
-      if (entry->d_name[0] != '.')
-	{
-	  if (entry->d_type == 4)
-	    my_printf("%s\n", entry->d_name);
-	  else
-	    my_printf("%s\n", entry->d_name);
-	}
-    }
 }
 
 void	apply_modifiers(char *av, char **files, char *args, int n)
@@ -56,7 +34,6 @@ void	apply_modifiers(char *av, char **files, char *args, int n)
     }
   while ((entry = readdir(dir)) != NULL)
     {
-      //go to sort
     }
   closedir(dir);
   return (0);
@@ -70,7 +47,7 @@ int	main(int ac, char **av)
   i = 1;
   if (ac == 1)
     {
-      print_basic();
+      print_basic(".");
       return (84);
     }
   else
@@ -79,7 +56,13 @@ int	main(int ac, char **av)
       getArgs(ac, av, args);
       i = (args[0] != '\0') ? 2 : 1;
       if (i == 2)
-      my_printf("Les arguments sont %s\n", args);
+	my_printf("Les arguments sont %s\n", args);
+    }
+  i = 1;
+  while (av[i] != '\0')
+    {
+      print_basic(av[i]);
+      i++;
     }
   //init(av, ac, args, i);
   return (0);
