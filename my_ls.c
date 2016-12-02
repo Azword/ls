@@ -5,11 +5,12 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Fri Dec  2 16:48:08 2016 Nathan Tréhout
+** Last update Fri Dec  2 17:12:34 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <include/my.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -17,39 +18,13 @@
 #include <time.h>
 #include <grp.h>
 
-int	displayPerms(char *path)
-{
-  struct stat stats;
-  struct passwd *passwd;
-  struct group *grp;
-  char	*time;
-  if (stat(path, &stats) == -1)
-      return (84);
-  time = last_edit(stats, stats.st_mtime);
-  passwd = getpwuid(stats.st_uid);
-  grp = getgrgid(stats.st_gid);
-  my_printf((S_ISDIR(stats.st_mode)) ? "d" : "-");
-  my_printf((stats.st_mode & S_IRUSR) ? "r" : "-");
-  my_printf((stats.st_mode & S_IWUSR) ? "w" : "-");
-  my_printf((stats.st_mode & S_IXUSR) ? "x" : "-");
-  my_printf((stats.st_mode & S_IRGRP) ? "r" : "-");
-  my_printf((stats.st_mode & S_IWGRP) ? "w" : "-");
-  my_printf((stats.st_mode & S_IXGRP) ? "x" : "-");
-  my_printf((stats.st_mode & S_IROTH) ? "r" : "-");
-  my_printf((stats.st_mode & S_IWOTH) ? "w" : "-");
-  if (stats.st_mode & S_ISVTX)
-    my_putchar('t');
-  else
-    my_printf((stats.st_mode & S_IXOTH) ? "x" : "-");
-  my_printf(" %d %s %s ", stats.st_nlink, passwd->pw_name, grp->gr_name);
-  my_printf("%d%s ", stats.st_size, time);
-}
-
-void	ls_heart(struct dirent *entry, char *path, int n)
+int	ls_heart(struct dirent *entry, char *path, int n)
 {
   char *dest;
 
   dest = malloc(sizeof(char) * my_strlen(path) + my_strlen(entry->d_name) * 4);
+  if (dest == NULL)
+    return (84);
   dest[0] = '\0';
   if (n == 1)
     {
@@ -64,13 +39,15 @@ void	ls_heart(struct dirent *entry, char *path, int n)
       my_printf("%s\n", entry->d_name);
     }
   free(dest);
+  return (0);
 }
 
-void	print_total(char *path)
+int	print_total(char *path)
 {
   int	i;
   DIR	*dir;
   struct dirent *entry;
+
   if ((dir = opendir(path)) == NULL)
     {
       return (84);
@@ -80,11 +57,13 @@ void	print_total(char *path)
       i++;
     }
   my_printf("total %d\n", i + 1);
+  return (0);
 }
 
 int	verif_if_file(char *path, char  *args, int ac, int n)
 {
   struct stat stats;
+
   if (stat(path, &stats) == -1)
     {
       my_putstr("stat error");
@@ -107,7 +86,7 @@ int	verif_if_file(char *path, char  *args, int ac, int n)
     }
 }
 
-void	open_directory(char *av, char *args, int n, int ac)
+int	open_directory(char *av, char *args, int n, int ac)
 {
   int	i;
   int	count;
@@ -132,6 +111,7 @@ void	open_directory(char *av, char *args, int n, int ac)
 	ls_heart(entry, av, i);
     }
   closedir(dir);
+  return (0);
 }
 
 int	main(int ac, char **av)
