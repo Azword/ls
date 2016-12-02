@@ -5,7 +5,7 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Fri Dec  2 16:16:26 2016 Nathan Tréhout
+** Last update Fri Dec  2 16:48:08 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
@@ -24,10 +24,7 @@ int	displayPerms(char *path)
   struct group *grp;
   char	*time;
   if (stat(path, &stats) == -1)
-    {
-      my_putstr("stat error");
       return (84);
-    }
   time = last_edit(stats, stats.st_mtime);
   passwd = getpwuid(stats.st_uid);
   grp = getgrgid(stats.st_gid);
@@ -40,9 +37,11 @@ int	displayPerms(char *path)
   my_printf((stats.st_mode & S_IXGRP) ? "x" : "-");
   my_printf((stats.st_mode & S_IROTH) ? "r" : "-");
   my_printf((stats.st_mode & S_IWOTH) ? "w" : "-");
-  my_printf((stats.st_mode & S_IXOTH) ? "x" : "-");
-  my_putchar(' ');
-  my_printf("%d %s %s ", stats.st_nlink, passwd->pw_name, grp->gr_name);
+  if (stats.st_mode & S_ISVTX)
+    my_putchar('t');
+  else
+    my_printf((stats.st_mode & S_IXOTH) ? "x" : "-");
+  my_printf(" %d %s %s ", stats.st_nlink, passwd->pw_name, grp->gr_name);
   my_printf("%d%s ", stats.st_size, time);
 }
 
