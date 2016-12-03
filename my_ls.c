@@ -5,7 +5,7 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Fri Dec  2 17:12:34 2016 Nathan Tréhout
+** Last update Sat Dec  3 08:07:25 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
@@ -98,9 +98,7 @@ int	open_directory(char *av, char *args, int n, int ac)
     return (1);
   verif_if_file(av, args, ac, n);
   if ((dir = opendir(av)) == NULL)
-    {
       return (84);
-    }
   if (isPresent(args, 'l') == 1)
     print_total(av);
   while ((entry = readdir(dir)) != NULL)
@@ -118,27 +116,18 @@ int	main(int ac, char **av)
 {
   int	i;
   char	*args;
+  char	**dir_to_print;
 
-  if (ac == 1 || (ac == 2 && av[1][1] == 'l'))
+  args = malloc(sizeof(char) * 6);
+  if (args == NULL)
+    return (84);
+  getArgs(ac, av, args);
+  if (isPresent(args, 'R'))
     {
-      (ac == 1) ? print_basic(".", 0) : 0;
-      (ac != 1) ? print_basic(".", 1) : 0;
+      dir_to_print = malloc(sizeof(char) * 6000);
+      if (dir_to_print == NULL)
+	return (84);
     }
-  else
-    {
-      args = malloc(sizeof(char) * 6);
-      getArgs(ac, av, args);
-      i = 1;
-      while (av[i] != '\0')
-	{
-	  if (ac != 2 && av[i] != av[1])
-	    my_putchar('\n');
-	  if (av[i + 1] == '\0')
-	    open_directory(av[i], args, 2, ac);
-	  else
-	    open_directory(av[i], args, 1, ac);
-	  i++;
-	}
-    }
+  init(ac, av, args, dir_to_print);
   return (0);
 }

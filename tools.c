@@ -5,7 +5,7 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Fri Dec  2 16:58:19 2016 Nathan Tréhout
-** Last update Fri Dec  2 17:11:03 2016 Nathan Tréhout
+** Last update Sat Dec  3 07:13:04 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
@@ -17,6 +17,34 @@
 #include <time.h>
 #include <stdlib.h>
 #include <grp.h>
+
+void	**reinitialize(char **dir_to_print)
+{
+  int	i;
+
+  i = 0;
+  while (dir_to_print[i] != '\0')
+    {
+      dir_to_print[i] = '\0';
+      i++;
+    }
+  return (dir_to_print);
+}
+
+char	*my_path_fusion(char *path, char *name)
+{
+  char *dest;
+
+  dest = malloc(sizeof(char) * my_strlen(path) + my_strlen(name) * 4);
+  if (dest == NULL)
+    return (84);
+  dest[0] = '\0';
+  dest = my_strcat(dest, path);
+  if (path[my_strlen(path) -1] != '/')
+    dest = my_strcat(dest, "/");
+  dest = my_strcat(dest, name);
+  return (dest);
+}
 
 int	isArgs(char c)
 {

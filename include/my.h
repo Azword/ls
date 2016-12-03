@@ -21,7 +21,4 @@ int my_strlen(char *str);
 char *my_strcat(char *dest, char *src);
 int my_printf(char *str, ...);
 int my_putstr(char *str);
-void my_putchar(char c);  
-  
-  
-
+void my_putchar(char c);
