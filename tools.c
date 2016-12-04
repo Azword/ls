@@ -5,20 +5,20 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Fri Dec  2 16:58:19 2016 Nathan Tréhout
-** Last update Sat Dec  3 07:13:04 2016 Nathan Tréhout
+** Last update Sun Dec  4 23:00:13 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
 #include <unistd.h>
-#include <include/my.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <time.h>
 #include <stdlib.h>
 #include <grp.h>
+#include "include/my.h"
 
-void	**reinitialize(char **dir_to_print)
+char	**reinitialize(char **dir_to_print)
 {
   int	i;
 
@@ -37,7 +37,7 @@ char	*my_path_fusion(char *path, char *name)
 
   dest = malloc(sizeof(char) * my_strlen(path) + my_strlen(name) * 4);
   if (dest == NULL)
-    return (84);
+    return (NULL);
   dest[0] = '\0';
   dest = my_strcat(dest, path);
   if (path[my_strlen(path) -1] != '/')
@@ -86,10 +86,7 @@ int	displayPerms(char *path)
     my_putchar('c');
   else
     my_printf((S_ISDIR(stats.st_mode)) ? "d" : "-");
-  my_printf((stats.st_mode & S_IRUSR) ? "r" : "-");
-  my_printf((stats.st_mode & S_IWUSR) ? "w" : "-");
-  my_printf((stats.st_mode & S_IXUSR) ? "x" : "-");
-  my_printf((stats.st_mode & S_IRGRP) ? "r" : "-");
+  show_perms_bis(path);
   my_printf((stats.st_mode & S_IWGRP) ? "w" : "-");
   my_printf((stats.st_mode & S_IXGRP) ? "x" : "-");
   my_printf((stats.st_mode & S_IROTH) ? "r" : "-");

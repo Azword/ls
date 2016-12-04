@@ -22,3 +22,13 @@ char *my_strcat(char *dest, char *src);
 int my_printf(char *str, ...);
 int my_putstr(char *str);
 void my_putchar(char c);
+void init(int ac, char **av, char *args , char **dir_to_print);
+void pre_call_R(char **av, char *args, char **dir_to_print);
+void pre_call_l(char **av, char *args, int ac);
+int my_ls_R(char *path, char *args, int i, char **dir_to_print);
+int print_first_path(struct dirent *entry, DIR *dir, char *path,
+		     char **dir_to_print, char *args);
+int assign_if_dir(char *name, char *path, char **dir_to_print);
+char **reinitialize(char **dir_to_print);
+char *my_path_fusion(char *path, char *name);
+int show_perms_bis(char *path);

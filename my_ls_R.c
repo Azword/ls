@@ -5,20 +5,20 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Sat Dec  3 05:40:28 2016 Nathan Tréhout
-** Last update Sat Dec  3 08:03:07 2016 Nathan Tréhout
+** Last update Sat Dec  3 08:16:41 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <include/my.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <time.h>
 #include <grp.h>
+#include "include/my.h"
 
-void	assign_if_dir(char *name, char *path, char **dir_to_print)
+int	assign_if_dir(char *name, char *path, char **dir_to_print)
 {
   struct stat stats;
   char *real_path;
@@ -34,9 +34,10 @@ void	assign_if_dir(char *name, char *path, char **dir_to_print)
 	i++;
       dir_to_print[i] = real_path;
     }
+  return (0);
 }
 
-void	print_first_path(struct dirent *entry, DIR *dir, char *path,
+int	print_first_path(struct dirent *entry, DIR *dir, char *path,
 			 char **dir_to_print, char *args)
 {
   if ((dir = opendir(path)) == NULL)
@@ -57,12 +58,14 @@ void	print_first_path(struct dirent *entry, DIR *dir, char *path,
   if (isPresent(args, 'l') == 0 || args[0] == '\0')
     my_putchar('\n');
   closedir(dir);
+  return (0);
 }
 
 int	my_ls_R(char *path, char *args, int i, char **dir_to_print)
 {
   DIR	*dir;
   struct dirent	*entry;
+
   if (path[0] != '-')
     my_printf("%s:\n", path);
   if (isPresent(args, 'l'))
@@ -73,4 +76,5 @@ int	my_ls_R(char *path, char *args, int i, char **dir_to_print)
       my_putchar('\n');
       return (my_ls_R(dir_to_print[i], args, i + 1, dir_to_print));
     }
+  return (0);
 }

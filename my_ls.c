@@ -5,18 +5,18 @@
 ** Login   <nathan.trehout@epitech.eu>
 **
 ** Started on  Mon Nov 21 15:12:23 2016 Nathan Tréhout
-** Last update Sat Dec  3 08:07:25 2016 Nathan Tréhout
+** Last update Sun Dec  4 16:26:32 2016 Nathan Tréhout
 */
 
 #include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <include/my.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <time.h>
 #include <grp.h>
+#include "include/my.h"
 
 int	ls_heart(struct dirent *entry, char *path, int n)
 {
@@ -129,5 +129,6 @@ int	main(int ac, char **av)
 	return (84);
     }
   init(ac, av, args, dir_to_print);
+  free(args);
   return (0);
 }
